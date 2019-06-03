@@ -15,11 +15,13 @@ def main():
     #print(GOTpy["aliases"])
 
     #parse jonsnow file for ...
-    for gotalias in GOTpy["aliases"]:
-            print(gotalias)
-                
+    with open('gotalias.txt','w') as jsaliases:
+        for gotalias in GOTpy["aliases"]:
+            print(gotalias, file=jsaliases)
+            
+
+
         #display char name
-    
         #display char alias/titles
         #display the API for ???
         
