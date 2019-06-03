@@ -13,13 +13,9 @@ def main():
     print(hitchhikers)
 
     ##open a file in write mode
-    zfile = open('galaxyguide.json','w')
+    with open('galaxyguide.json','w') as vidfile: #'w' = write, 'r' = read', 'a' = append
+        ##use the json library
+        json.dump(hitchhikers,vidfile)
 
-
-    ##use the json library
-    json.dump(hitchhikers,zfile)
-
-    ##close file
-    zfile.close()
-
+   
 main()
