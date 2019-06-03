@@ -17,5 +17,5 @@ def main():
         ##use the json library
         json.dump(hitchhikers,vidfile)
 
-   
-main()
+if __name__ == "__main__":  
+    main()
