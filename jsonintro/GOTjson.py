@@ -9,13 +9,17 @@ def main():
     with open('jonsnow.json','r') as gotdata: #'w' = write, 'r' = read', 'a' = append
         jonsnow = gotdata.read()
         GOTpy = json.loads(jonsnow) 
-    #print(GOTpy)
+    print(GOTpy["name"])
     print(GOTpy["url"])
     print(GOTpy["titles"][0])
-    print(GOTpy["aliases"])
+    #print(GOTpy["aliases"])
 
-        #parse jonsnow file for ...
+    #parse jonsnow file for ...
+    for gotalias in GOTpy["aliases"]:
+            print(gotalias)
+                
         #display char name
+    
         #display char alias/titles
         #display the API for ???
         
