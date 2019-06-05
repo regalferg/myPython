@@ -14,7 +14,7 @@ Commands:
     go [direction]
     get [item]
 ========
-Collect the key and potion and escape to safety!
+Collect the key and potion and escape to safety in the Gardens!
     ''')
 
 def showStatus():
@@ -37,8 +37,8 @@ def playerHit():
         print('The beholder now has ' + str(beholderHP) + ' hitpoints remaining!')
         return beholderHP
 def beholderHit():
-    global playerHP
     time.sleep(1)
+    global playerHP
     playerHP = playerHP - random.randrange(15,50)
     print('Player now has ' + str(playerHP)+ " Hitpoints remaining")
     return playerHP
