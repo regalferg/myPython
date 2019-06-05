@@ -1,14 +1,20 @@
 #!/usr/bin/python3
 """ Author: regaferg | """
+import random, time
+
+playerHP = 150
+beholderHP = 200
 
 def showinstructions():
     #print a menu of commands
     print('''
-RPG Game
+Castle Escape!
 ========
 Commands:
     go [direction]
     get [item]
+========
+Collect the key and potion and escape to safety!
     ''')
 
 def showStatus():
@@ -21,20 +27,58 @@ def showStatus():
     if 'item' in rooms[currentRoom]:
         print('You see a ' + rooms[currentRoom]['item'])
     print('---------------------------')
+def playerHit():
+    time.sleep(1)
+    global beholderHP
+    print('What do you?' )
+    playerAtk = input("> ").lower()
+    while playerAtk == 'attack':
+        beholderHP = beholderHP - random.randrange(10,50)
+        print('The beholder now has ' + str(beholderHP) + ' hitpoints remaining!')
+        return beholderHP
+def beholderHit():
+    global playerHP
+    time.sleep(1)
+    playerHP = playerHP - random.randrange(15,50)
+    print('Player now has ' + str(playerHP)+ " Hitpoints remaining")
+    return playerHP
+
+
+def doBattle():
+    while playerHP != 0 or beholderHP !=0:
+        playerHit()
+        beholderHit()
+        if playerHP <=0:
+            print("You have been given another chance!")
+            break
+        if beholderHP <=0:
+            print('You have slain the beholder, continue your quest!')
+            continue
+   
+    
 
 #an inventory, initially empty
 inventory = []
 
+
 # a dict linking a room to other rooms
 rooms = {
+    'Castle Entrance':{
+    'south':'Hall'
+    },
     'Hall':{
-        'south':'Kitchen',
+        'south':'Toilets',
         'east': 'Dining Hall',
-        'item':'key'
+        'north':'Castle Entrance'
+    },
+    'Toilets':{
+    'north':'Hall',
+    'south':'Kitchen',
+    'item':'key'
     },
     'Kitchen':{
-        'north':'Hall',
-        'item': 'monster'
+        'north':'Toilets',
+        'item': 'beholder'
     },
     'Dining Hall':{
         'west':'Hall',
@@ -47,7 +91,7 @@ rooms = {
 }
 
 #start the player in the hall
-currentRoom = 'Hall'
+currentRoom = 'Castle Entrance'
 
 #initial function call
 showinstructions()
@@ -68,6 +112,8 @@ while True:
         if move[1] in rooms[currentRoom]:
         #set current room to new room
             currentRoom = rooms[currentRoom][move[1]]
+            
+            
     #there is no door link to a new room
         else:
             print('You shall not pass!')
@@ -87,10 +133,16 @@ while True:
         #tell them they can't get it
             print('Cannot get ' + move[1] + '1')
        
-## if player enters room with monster
-    if 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-        print('A monster has gotcha...GAME OVER!')
-        break
+## if player enters room with beholder
+    # if 'item' in rooms[currentRoom] and 'beholder' in rooms[currentRoom]['item']:
+    #     print('A beholder has appeared!')
+    #     print("Attack or go the way you came to run away")
+
+    if move[0]=='attack':
+        print("Battle Started")
+        doBattle()
+    
+        
     if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
-        print("YOU WIN")
+        print("YOU ESCAPED, GAME OVER")
         break
