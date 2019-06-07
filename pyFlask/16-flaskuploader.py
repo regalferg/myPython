@@ -1,11 +1,15 @@
 #!/usr/bin/python3
 
-from flask import Flask, render_template, request,redirect,url_for
+from flask import Flask, render_template, request,redirect,url_for, send_file
 from werkzeug import secure_filename
 import re
 import json
 import smtplib
 from email.message import EmailMessage
+#import pandas as pd
+#import numpy as np
+#import matplotlib as plt
+import graphin
 
 app = Flask(__name__)
 
@@ -20,9 +24,17 @@ def uploader():
         mysteryfile.save(secure_filename(mysteryfile.filename))
         if 'cap' in mysteryfile.filename:
             return redirect(url_for('sip', filetoparse=mysteryfile.filename))
+        elif 'xls' in mysteryfile.filename:
+            return redirect(url_for('excel', filetoparse=mysteryfile.filename))
 
         else:
             return 'That format is not yet support please check back soon'
+
+@app.route('/excel/<filetoparse>')
+def excel(filetoparse):
+    return send_file(graphin.pygraph(filetoparse), mimetype='image/png')
+
+
 
 @app.route('/sip/<filetoparse>')
 def sip(filetoparse):
